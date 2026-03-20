@@ -44,6 +44,17 @@ if errorlevel 1 (
   git remote set-url origin %REPO_URL%
 )
 
+git ls-remote --exit-code --heads origin %DEFAULT_BRANCH% >nul 2>&1
+if not errorlevel 1 (
+  echo [INFO] Branch remoto %DEFAULT_BRANCH% encontrada. Sincronizando historico...
+  git pull origin %DEFAULT_BRANCH% --allow-unrelated-histories --no-edit
+  if errorlevel 1 (
+    echo [ALERTA] Falha ao sincronizar historico automaticamente.
+    echo Resolva conflitos locais e execute novamente.
+    exit /b 1
+  )
+)
+
 for /f "delims=" %%a in ('git config --get user.name') do set GIT_USER=%%a
 if "%GIT_USER%"=="" (
   echo [ERRO] Git user.name nao configurado.
