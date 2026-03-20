@@ -91,3 +91,12 @@ release_github.bat 0.1.0
 Workflow em `.github/workflows/release.yml`.
 
 > Como usa `dcc32`, é necessário runner **self-hosted Windows** com Delphi/RAD Studio instalado e ambiente configurado (`rsvars.bat`).
+
+### CI de build (PR e push)
+
+Workflow separado em `.github/workflows/ci.yml` para validar compilação sem publicar release.
+
+- Dispara em `push` para `main`
+- Dispara em `pull_request` para `main`
+- Executa `validate_build.bat`
+- Publica logs (`build_debug.log` e `build_release.log`) como artifact
