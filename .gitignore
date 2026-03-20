@@ -1,0 +1,29 @@
+# Delphi build outputs
+*.dcu
+*.ddp
+*.drc
+*.map
+*.identcache
+*.local
+*.stat
+*.tvsconfig
+
+# Delphi project user files
+*.dsk
+*.dproj.local
+
+# Build and release folders
+bin/
+dist/
+
+# Logs
+build_debug.log
+build_release.log
+
+# OS/editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Local database artifacts (keep only structure/scripts in repo)
+database/*.fdb

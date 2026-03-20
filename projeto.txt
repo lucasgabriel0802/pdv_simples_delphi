@@ -1,0 +1,236 @@
+Nome: ProjetoVendas
+
+3.2 Criar estrutura de pastas (manual)
+/src/domain
+/src/application
+/src/infrastructure
+/src/presentation
+3.3 Configurar Library Path
+
+Adicione /src no Library Path do Delphi.
+
+FASE 4 — CONEXÃO COM BANCO (SINGLETON)
+4.1 Criar unit uConnection.pas
+
+Crie uma classe Singleton de conexão FireDAC para Firebird 5
+4.2 Testar conexão
+
+Criar botão em Form principal
+
+Abrir conexão
+
+Validar se conecta
+
+FASE 5 — DOMAIN (DDD)
+5.1 Criar entidades
+
+Ordem:
+
+Produto
+
+Cliente
+
+VendaItem
+
+Venda
+
+5.2 Implementar regras
+Produto:
+
+EntradaEstoque
+
+BaixarEstoque (com validação)
+
+AjustarEstoque
+
+Venda:
+
+AdicionarItem
+
+CalcularTotal
+
+5.3 Validar regras
+
+Teste manual no código
+
+Garantir:
+
+Não aceita estoque negativo
+
+FASE 6 — INTERFACES
+
+Criar:
+
+IProdutoRepository
+
+IClienteRepository
+
+IVendaRepository
+
+FASE 7 — INFRASTRUCTURE (REPOSITORIES)
+7.1 Implementar repositórios
+
+Ordem:
+
+ProdutoRepository
+
+ClienteRepository
+
+VendaRepository
+
+7.2 Regras
+
+Apenas aqui tem SQL
+
+Sempre usar parâmetros
+
+Usar FireDAC
+
+7.3 Testar repositórios
+
+Inserir produto
+
+Buscar produto
+
+Atualizar estoque
+
+FASE 8 — APPLICATION (USE CASES)
+8.1 Criar serviços
+
+ProdutoService
+
+EstoqueService
+
+VendaService
+
+8.2 Implementar casos de uso
+Produto
+
+Criar produto
+
+Estoque
+
+Entrada
+
+Ajuste
+
+Venda
+
+Criar venda
+
+Adicionar item
+
+Totalizar
+
+8.3 Implementar TRANSAÇÃO
+StartTransaction
+Commit
+Rollback
+8.4 Validar fluxo completo
+
+Teste:
+
+Criar produto
+
+Dar entrada
+
+Fazer venda
+
+Validar estoque
+
+FASE 9 — PRESENTATION (FORMS)
+9.1 Tela de Produtos
+
+CRUD completo
+
+DBGrid
+
+Botões padrão
+
+9.2 Tela de Clientes
+
+CRUD simples
+
+9.3 Tela de Entrada de Estoque
+
+Produto + quantidade
+
+9.4 Tela de Ajuste
+
+Produto + quantidade (+/-)
+
+9.5 Tela de Vendas
+
+Selecionar cliente
+
+Adicionar itens
+
+Mostrar total
+
+9.6 Integração
+
+Forms chamam Services
+
+FASE 10 — RELATÓRIOS
+10.1 Instalar FastReport
+10.2 Relatório de Vendas
+
+Filtros:
+
+Data inicial
+
+Data final
+
+Cliente
+
+10.3 Criar query
+WHERE DATA BETWEEN :INI AND :FIM
+10.4 Layout
+
+Cabeçalho venda
+
+Sub-relatório itens
+
+10.5 Relatório de Estoque
+
+Produto
+
+Estoque
+
+Valor total
+
+🧪 FASE 11 — TESTES
+Testes obrigatórios
+
+Venda com estoque insuficiente 
+
+Entrada estoque ✔
+
+Ajuste negativo ✔
+
+Venda com múltiplos itens ✔
+
+Total correto ✔
+
+FASE 12 — REFATORAÇÃO
+
+Checklist:
+
+❌ SQL em Form
+
+❌ Regra na UI
+
+✔ Métodos pequenos
+
+✔ Nomes claros
+
+✔ Sem duplicação
+
+FASE 13 — VALIDAÇÕES
+
+Bloquear estoque negativo
+
+Validar campos obrigatórios
+
+Tratamento de exceções
+

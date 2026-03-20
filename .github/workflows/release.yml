@@ -1,0 +1,51 @@
+name: Release
+
+on:
+    workflow_dispatch:
+        inputs:
+            version:
+                description: "Versão da release (ex: 0.1.0)"
+                required: true
+                type: string
+
+permissions:
+    contents: write
+
+jobs:
+    build-and-release:
+        runs-on: [self-hosted, windows]
+
+        steps:
+            - name: Checkout
+              uses: actions/checkout@v4
+              with:
+                  fetch-depth: 0
+
+            - name: Build and package
+              shell: cmd
+              run: |
+                  call package_release.bat ${{ github.event.inputs.version }}
+
+            - name: Upload artifact
+              uses: actions/upload-artifact@v4
+              with:
+                  name: ProjetoVendas-v${{ github.event.inputs.version }}-win32
+                  path: |
+                      dist/ProjetoVendas-v${{ github.event.inputs.version }}-win32.zip
+                      dist/ProjetoVendas-v${{ github.event.inputs.version }}-win32.sha256.txt
+
+            - name: Create Git tag
+              shell: cmd
+              run: |
+                  git tag v${{ github.event.inputs.version }}
+                  git push origin v${{ github.event.inputs.version }}
+
+            - name: Publish GitHub Release
+              uses: softprops/action-gh-release@v2
+              with:
+                  tag_name: v${{ github.event.inputs.version }}
+                  name: ProjetoVendas v${{ github.event.inputs.version }}
+                  body_path: RELEASE_NOTES_TEMPLATE.md
+                  files: |
+                      dist/ProjetoVendas-v${{ github.event.inputs.version }}-win32.zip
+                      dist/ProjetoVendas-v${{ github.event.inputs.version }}-win32.sha256.txt
